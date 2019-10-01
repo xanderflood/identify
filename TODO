@@ -1,0 +1,16 @@
+TODO:
+- middleware & view changes to pass referrer_url along
+- add a route that can be hit to confirm authentication; it either redirects to a referrer_url with a refreshed token, or to a login page
+- figure out which devise modules to use
+
+User flows:
+- arrive by address bar, unauthenticated
+- get logged in (maybe by creating a new account)
+- get redirected to a "you're logged in!" page
+
+- arrive by redirect, unauthenticated
+- get logged in (maybe by creating a new account)
+- get redirected to your original referrer_url
+
+- arrive by redirect, authenticated
+- get redirected to your original referrer_url
