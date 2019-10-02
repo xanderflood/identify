@@ -6,17 +6,17 @@ class Referrerer
 
   def call env
     req = Rack::Request.new(env)
-    referer = req.params["referrer_url"]
+    referrer = req.params["referrer_url"]
 
     status, headers, body = @app.call(env)
 
-    if referer.nil? || referer.empty?
+    if referrer.nil? || referrer.empty?
       [status, headers, body]
     else
       response = Rack::Response.new body, status, headers
-      response.set_cookie("identify_referrer_url", {
-        value: referer,
-        secure: true,
+      response.set_cookie("_identify_referrer_url", {
+        value: referrer,
+        path: '/', # required in order to delete the cookie
         expires: Time.now + @referrer_cookie_ttl,
       })
       response.finish
