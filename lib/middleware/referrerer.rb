@@ -1,7 +1,7 @@
 class Referrerer
-  def initialize app, referrer_cookie_ttl = 30*60
+  def initialize app, referrer_cookie_ttl_seconds = 30*60
     @app = app
-    @referrer_cookie_ttl = referrer_cookie_ttl
+    @referrer_cookie_ttl_seconds = referrer_cookie_ttl_seconds
   end
 
   def call env
@@ -17,7 +17,7 @@ class Referrerer
       response.set_cookie("_identify_referrer_url", {
         value: referrer,
         path: '/', # required in order to delete the cookie
-        expires: Time.now + @referrer_cookie_ttl,
+        expires: Time.now + @referrer_cookie_ttl_seconds,
       })
       response.finish
     end

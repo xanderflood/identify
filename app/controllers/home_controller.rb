@@ -3,14 +3,7 @@ class HomeController < ApplicationController
   end
 
   def redirect
-    # TODO
-    # 1) if unauthenticated, redirect to login page
-    # 2) if authenticated, render a view, and update JWT cookie
-    # 3) the view has placeholder text, + javascript that
-    #      checks your referrer_url cookie
-
-    # have a middleware that _always_ freshens JWTs for
-    # authenticated users?
+    @default_referrer_url = Rails.application.config.x.default_referrer_url
   end
 
   def tmp

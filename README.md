@@ -1,24 +1,11 @@
-# README
+User flows:
+- arrive by address bar, unauthenticated
+- get logged in (maybe by creating a new account)
+- get redirected to a "you're logged in!" page
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- arrive by redirect, unauthenticated
+- get logged in (maybe by creating a new account)
+- get redirected to your original referrer_url
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- arrive by redirect, authenticated
+- get redirected to your original referrer_url

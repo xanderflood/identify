@@ -7,4 +7,6 @@ class User < ApplicationRecord
          :trackable
 
   # TODO how to configure timeouts?
+
+  alias_attribute :uuid, :id
 end

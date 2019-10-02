@@ -18,4 +18,9 @@ Rails.application.routes.draw do
 
   # TODO have this redirect or something? this is a convenience function
   # get 'logout'
+
+  # TODO for use by other services
+  # post 'refresh'    # check if the token is almost stale
+                      # refresh the token if needed and possible
+                      # if not, the other service should redirect to root
 end
