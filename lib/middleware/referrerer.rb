@@ -1,6 +1,7 @@
 class Referrerer
-  def initialize app
+  def initialize app, referrer_cookie_ttl = 30*60
     @app = app
+    @referrer_cookie_ttl = referrer_cookie_ttl
   end
 
   def call env
@@ -15,9 +16,8 @@ class Referrerer
       response = Rack::Response.new body, status, headers
       response.set_cookie("identify_referrer_url", {
         value: referer,
-
-        #TODO make this TTL more configurable
-        expires: Time.now + 30*60,
+        secure: true,
+        expires: Time.now + @referrer_cookie_ttl,
       })
       response.finish
     end
