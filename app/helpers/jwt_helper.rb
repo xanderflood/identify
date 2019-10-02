@@ -1,4 +1,6 @@
 module JwtHelper
+  InvalidToken = Class.new(StandardError)
+
   def claims_for_user user
     {
       sub: user.uuid,
@@ -13,18 +15,19 @@ module JwtHelper
   end
 
   def claims_from_token token_string
+    # decode will validate any standard claims that are present
     token = JWT.decode token_string, Rails.application.config.x.jwt_signing_secret, true, { algorithm: 'HS256' }
 
     # token[0] is the claims, token[1] is the header
     token[0]
   end
 
-  def authenticate_jwt_string token_string
+  def authenticate_jwt_string! token_string
     claims = claims_from_token token_string
-    # TODO
+    raise InvalidToken unless claims["sub"].present?
   end
 
-  def authenticate_jwt
+  def authenticate_jwt!
     #  TODO
   end
 end
