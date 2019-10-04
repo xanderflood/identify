@@ -1,5 +1,5 @@
 class Referrerer
-  def initialize app, referrer_cookie_ttl_seconds = 30*60
+  def initialize app, referrer_cookie_ttl_seconds
     @app = app
     @referrer_cookie_ttl_seconds = referrer_cookie_ttl_seconds
   end
@@ -18,8 +18,9 @@ class Referrerer
         Rails.application.config.x.referrer_cookie_name,
         {
           value: referrer,
-          # path: '/', # required in order to delete the cookie
-          expires: Time.now + @referrer_cookie_ttl_seconds.seconds,
+          path: '/', # required in order to delete the cookie
+          # expires: Time.now + @referrer_cookie_ttl_seconds.seconds,
+          # TODO why does the expiry cause the token not to be set?
         },
       )
       response.finish

@@ -3,6 +3,9 @@
 
 <script type="text/javascript">
 	$(function() {
-		window.identifyRedirector.redirectToReferrerURLOr("<%= @default_referrer_url %>");
+		window.identifyRedirector.redirectToReferrerURLOr(
+			"<%= @default_referrer_url %>",
+			"<%= @referrer_url_cookie %>",
+		);
 	})
 </script>

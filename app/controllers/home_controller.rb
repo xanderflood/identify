@@ -23,7 +23,8 @@ class HomeController < ApplicationController
   def redirect
     @default_referrer_url = Rails.application.config.x.default_referrer_url
     @default_referrer_url = manage_path unless @default_referrer_url.present?
-    puts "HEYHEYHEYHEYHEY", @default_referrer_url
+
+    @referrer_url_cookie = Rails.application.config.x.referrer_cookie_name
   end
 
   def manage
