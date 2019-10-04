@@ -22,12 +22,12 @@ RUN npm -v
 COPY Gemfile Gemfile.lock package.json yarn.lock ./
 RUN gem install bundler -v 1.17.3
 RUN bundle install --verbose --jobs 20 --retry 5
-
 RUN npm install -g yarn
-RUN yarn install --check-files
 
 # Copy the main application.
 COPY . ./
+
+RUN yarn install --check-files
 
 # Expose port 3000 to the Docker host, so we can access it
 # from the outside.
