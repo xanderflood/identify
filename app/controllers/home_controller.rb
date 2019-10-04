@@ -1,6 +1,4 @@
 class HomeController < ApplicationController
-  # TODO do I need to be using protect_from_forgery?
-
   ## these routes are open to the world
   def index
     if user_signed_in?
@@ -8,6 +6,7 @@ class HomeController < ApplicationController
       return
     end
 
+    set_referrer_cookie
     redirect_to login_path
   end
 
@@ -34,5 +33,18 @@ class HomeController < ApplicationController
     sign_out current_user
 
     redirect_to root_path
+  end
+
+  private
+  def set_referrer_cookie
+    referrer = params["referrer_url"]
+
+    if referrer.present?
+      cookies[Rails.application.config.x.referrer_cookie_name] = {
+        value: referrer,
+        path: '/', # required in order to delete the cookie
+        expires: Time.now + Rails.application.config.x.referrer_cookie_ttl_seconds.seconds,
+      }
+    end
   end
 end

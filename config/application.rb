@@ -44,10 +44,8 @@ module Identify
     config.x.default_referrer_url              = ENV["DEFAULT_REFERRER_URL"]
     config.x.referrer_cookie_name              = ENV["REFERRER_COOKIE_NAME"] || "_identify_referrer_url"
     config.x.jwt_cookie_name                   = ENV["JWT_COOKIE_NAME"] || "_identify_jwt_string"
-    config.x.referrer_cookie_ttl_seconds       = ENV["REFERRER_COOKIE_EXPIRATION_SECONDS"].to_i || 1800 # 30 minutes
-    config.x.jwt_ttl_seconds                   = ENV["JWT_COOKIE_EXPIRATION_SECONDS"].to_i || 21600 # 6 hours
-    config.x.identify_sessions_timeout_seconds = ENV["IDENTIFY_SESSIONS_TIMEOUT_SECONDS"] || 86400 # 1 day
-
-    config.middleware.use Referrerer, config.x.referrer_cookie_ttl_seconds
+    config.x.referrer_cookie_ttl_seconds       = ENV["REFERRER_COOKIE_EXPIRATION_SECONDS"] ? ENV["REFERRER_COOKIE_EXPIRATION_SECONDS"].to_i : 1800  # 30 minutes
+    config.x.jwt_ttl_seconds                   = ENV["JWT_COOKIE_EXPIRATION_SECONDS"]      ? ENV["JWT_COOKIE_EXPIRATION_SECONDS"].to_i      : 21600 # 6 hours
+    config.x.identify_sessions_timeout_seconds = ENV["IDENTIFY_SESSIONS_TIMEOUT_SECONDS"]  ? ENV["IDENTIFY_SESSIONS_TIMEOUT_SECONDS"]       : 86400 # 1 day
   end
 end
