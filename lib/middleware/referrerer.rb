@@ -14,11 +14,14 @@ class Referrerer
       [status, headers, body]
     else
       response = Rack::Response.new body, status, headers
-      response.set_cookie("_identify_referrer_url", {
-        value: referrer,
-        path: '/', # required in order to delete the cookie
-        expires: Time.now + @referrer_cookie_ttl_seconds,
-      })
+      response.set_cookie(
+        Rails.application.config.x.referrer_cookie_name,
+        {
+          value: referrer,
+          # path: '/', # required in order to delete the cookie
+          expires: Time.now + @referrer_cookie_ttl_seconds.seconds,
+        },
+      )
       response.finish
     end
   end

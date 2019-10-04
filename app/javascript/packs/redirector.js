@@ -6,9 +6,11 @@ window.identifyRedirector = window.identifyRedirector || (function() {
 		var target_url = Cookies.get("_identify_referrer_url") || defaultDestination;
 
 		window.location.href = target_url;
-	}
+
+		//TODO delete the cookie after use
+	};
 
 	return {
 		redirectToReferrerURLOr: _redirectToReferrerURLOr,
-	}
+	};
 })();

@@ -1,5 +1,6 @@
 module JwtHelper
   InvalidToken = Class.new(StandardError)
+  MissingToken = Class.new(StandardError)
 
   def claims_for_user user
     {
@@ -25,9 +26,20 @@ module JwtHelper
   def authenticate_jwt_string! token_string
     claims = claims_from_token token_string
     raise InvalidToken unless claims["sub"].present?
+
+    claims
   end
 
-  def authenticate_jwt!
-    #  TODO
+  def authenticate_jwt! request
+    token_string = token_from_request request
+    raise MissingToken unless token.present?
+
+    authenticate_jwt_string! token_string
+  end
+
+  def token_from_request request
+    pattern = /^Bearer /
+    header  = request.headers['Authorization']
+    header.gsub(pattern, '') if header && header.match(pattern)
   end
 end

@@ -4,9 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable, :lockable, :timeoutable,
-         :trackable, timeout_in: Rails.application.config.x.identify_sessions_timeout_seconds
-
-  # TODO how to configure timeouts?
+         :trackable, timeout_in: Rails.application.config.x.identify_sessions_timeout_seconds.seconds
 
   alias_attribute :uuid, :id
 end
