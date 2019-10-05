@@ -21,18 +21,13 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
+  host: <%= ENV['IDENTIFY_DB_HOST'].present? = ENV['IDENTIFY_DB_HOST'] || "localhost" %>
+  username: <%= ENV['IDENTIFY_DB_USERNAME'].present? = ENV['IDENTIFY_DB_USERNAME'] || "identify" %>
+  password: <%= ENV['IDENTIFY_DB_PASSWORD'] %>
+
 development:
   <<: *default
-  database: identify_development
-
-  # The specified database role being used to connect to postgres.
-  # To create additional roles in postgres see `$ createuser --help`.
-  # When left blank, postgres will use the default role. This is
-  # the same name as the operating system user that initialized the database.
-  #username: identify
-
-  # The password associated with the postgres role (username).
-  #password:
+  database: <%= ENV['IDENTIFY_DB_NAME'].present? = ENV['IDENTIFY_DB_NAME'] || "identify_development" %>
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -80,6 +75,4 @@ test:
 #
 production:
   <<: *default
-  database: identify_production
-  username: identify
-  password: <%= ENV['IDENTIFY_DATABASE_PASSWORD'] %>
+  database: <%= ENV['IDENTIFY_DB_NAME'].present? = ENV['IDENTIFY_DB_NAME'] || "identify_production" %>
