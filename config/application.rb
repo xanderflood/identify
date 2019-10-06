@@ -33,7 +33,8 @@ module Identify
     # load config from environment
     config.x.service_domain              = ENV["SERVICE_DOMAIN"]       || fail("Environment variable SERVICE_DOMAIN must be set")
     config.x.authorization_domain        = ENV["AUTHORIZATION_DOMAIN"] || fail("Environment variable AUTHORIZATION_DOMAIN must be set")
-    config.x.jwt_signing_secret          = ENV["JWT_SIGNING_SECRET"]   || fail("Environment variable JWT_SIGNING_SECRET must be set")
+    config.x.jwt_signing_secret          = ENV["JWT_SIGNING_SECRET"]
+    fail("Environment variable JWT_SIGNING_SECRET must be set") if defined?(::Rails::Server) && !config.x.jwt_signing_secret
 
     # NOTE: blank default_referrer_url causes it to use '/manage',
     # which has account management links
