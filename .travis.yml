@@ -1,0 +1,31 @@
+dist: xenial
+
+language: ruby
+
+rvm:
+  - 2.6.3
+
+addons:
+  postgresql: "9.6"
+
+env:
+  - SERVICE_DOMAIN=login.example.internal
+  - AUTHORIZATION_DOMAIN=example.internal
+  - IDENTIFY_DB_USERNAME=postgres
+  - JWT_SIGNING_SECRET=secret
+
+before_script:
+  - docker build . -t xanderflood/identify:local
+
+script:
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - DOCKER_REPO=xanderflood/identify
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo "staging" ; fi`
+
+  - docker tag $DOCKER_REPO:local $DOCKER_REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker tag $DOCKER_REPO:local $DOCKER_REPO:${TRAVIS_COMMIT::8}
+  - docker tag $DOCKER_REPO:local $DOCKER_REPO:$TAG
+
+  - docker push $DOCKER_REPO:travis-$TRAVIS_BUILD_NUMBER
+  - docker push $DOCKER_REPO:${TRAVIS_COMMIT::8}
+  - docker push $DOCKER_REPO:$TAG

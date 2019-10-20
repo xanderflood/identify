@@ -5,6 +5,7 @@ module JwtHelper
   def claims_for_user user
     {
       sub: user.uuid,
+      eml: user.email,
       iss: Rails.application.config.x.service_domain,
       iat: Time.now.to_i,
       exp: Time.now.to_i + Rails.application.config.x.jwt_ttl_seconds,
