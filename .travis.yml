@@ -15,7 +15,6 @@ env:
   - JWT_SIGNING_SECRET=secret
 
 before_script:
-  - bundle install —jobs=3 —retry=3
   - docker build . -t xanderflood/identify:local
 
 script:
