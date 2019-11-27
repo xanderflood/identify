@@ -20,6 +20,7 @@ script:
   - export name="local"
   - ./push_image.sh
 
+  - docker pull xanderflood/identify:$TAG
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "swarm"; else echo "swarm-staging" ; fi`
   - export DOCKER_REPO=xanderflood/identify
   - export name="swarm-local"
