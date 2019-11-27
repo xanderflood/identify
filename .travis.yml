@@ -8,13 +8,13 @@ addons:
   postgresql: "9.6"
 
 before_script:
-  - docker build . -t xanderflood/identify:local
   - docker build . -t xanderflood/identify:swarm-local -f swarm.Dockerfile
 
 script:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo "staging" ; fi`
 
+  - docker build . -t xanderflood/identify:local
   - export DOCKER_REPO=xanderflood/identify
   - export tags="build-$TRAVIS_BUILD_NUMBER,commit-${TRAVIS_COMMIT::8},$TAG"
   - export name="local"
