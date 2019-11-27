@@ -13,16 +13,14 @@ before_script:
 
 script:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo "staging" ; fi`
-
   - export DOCKER_REPO=xanderflood/identify
+
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo "staging" ; fi`
   - export tags="build-$TRAVIS_BUILD_NUMBER,commit-${TRAVIS_COMMIT::8},$TAG"
   - export name="local"
   - ./push_image.sh
 
-  - docker pull xanderflood/identify:$TAG
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "swarm"; else echo "swarm-staging" ; fi`
-  - export DOCKER_REPO=xanderflood/identify
   - export name="swarm-local"
   - export tags="build-$TRAVIS_BUILD_NUMBER,commit-${TRAVIS_COMMIT::8},$TAG"
   - ./push_image.sh
